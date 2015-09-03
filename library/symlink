@@ -34,6 +34,9 @@ for root, directories, files in os.walk(src):
     for filename in files:
         path = os.path.join(target_root, filename)
 
+        if not os.path.islink(path):
+            os.unlink(path)
+
         if not os.path.exists(path):
             os.symlink(os.path.join(root, filename), path)
             changed = True
