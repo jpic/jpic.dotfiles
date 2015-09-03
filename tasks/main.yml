@@ -1,0 +1,21 @@
+---
+
+- name: cloning dotfiles
+  git: 
+    repo: '{{ dotfiles_url }}'
+    dest: '{{ dotfiles_src }}'
+    track_submodules: yes
+    force: no
+  ignore_errors: yes
+  tags: git
+  register: dotfiles_clone
+
+- stat: path={{ dotfiles_src }}
+  register: dotfiles_repo
+
+- fail: msg="Could not clone dotfiles"
+  when: not dotfiles_repo.stat.exists
+
+- symlink:
+    src: '{{ dotfiles_src }}/home'
+    dest: '{{ dotfiles_home }}'
