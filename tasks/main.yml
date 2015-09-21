@@ -19,3 +19,4 @@
 - symlink:
     src: '{{ dotfiles_src }}/home'
     dest: '{{ dotfiles_home }}'
+  tags: symlink
